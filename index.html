@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avishkaar Top 10 Teams</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #001a33 0%, #003d5c 50%, #001a33 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            color: #ffffff;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #00d3f3;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00d3f3;
+            animation: float-particle 10s infinite;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 211, 243, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: 0;
+        }
+
+        .tech-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 211, 243, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 211, 243, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .logo {
+            position: fixed;
+            top: 20px;
+            left: 30px;
+            width: 160px;
+            height: auto;
+            z-index: 1001;
+            filter: drop-shadow(0 0 20px rgba(0, 211, 243, 0.4));
+            animation: logoEntry 1s ease-out;
+        }
+
+        .mascot-float {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            width: 130px;
+            height: 130px;
+            z-index: 1001;
+            filter: drop-shadow(0 0 30px rgba(0, 211, 243, 0.6));
+            animation: mascotFloat 4s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: 2.3rem;
+            color: #00d3f3;
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+            text-shadow: 
+                0 0 20px rgba(0, 211, 243, 1),
+                0 0 40px rgba(0, 211, 243, 0.8),
+                0 0 60px rgba(0, 211, 243, 0.6);
+            animation: textGlow 2s ease-in-out infinite;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            z-index: 5;
+        }
+
+        .container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1200px;   /* wider so 5 cards fit */
+    margin: 0 auto;
+    padding: 140px 20px 40px;
+}
+
+        .start-screen {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .start-btn {
+            padding: 20px 50px;
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #001a33;
+            background: linear-gradient(135deg, #00d3f3 0%, #00a8cc 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 
+                0 5px 30px rgba(0, 211, 243, 0.6),
+                0 0 50px rgba(0, 211, 243, 0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .start-btn:hover::before {
+            width: 260px;
+            height: 260px;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 
+                0 10px 50px rgba(0, 211, 243, 0.8),
+                0 0 80px rgba(0, 211, 243, 0.6);
+        }
+
+        .list-wrapper {
+            margin-top: 40px;
+        }
+
+       .team-list {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));  /* 5 cards per row */
+    gap: 18px 20px;                                    /* row / column gap */
+}
+
+        .team-card {
+            background: linear-gradient(135deg, rgba(0, 211, 243, 0.18) 0%, rgba(0, 168, 204, 0.1) 100%);
+            backdrop-filter: blur(18px);
+            border-radius: 18px;
+            border: 2px solid rgba(0, 211, 243, 0.5);
+            box-shadow:
+                0 8px 30px rgba(0, 211, 243, 0.35),
+                inset 0 0 25px rgba(0, 211, 243, 0.15);
+            padding: 16px 22px;
+            opacity: 0;
+            transform: translateY(30px) scale(0.96);
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;  
+        }
+
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at top left, rgba(0, 211, 243, 0.25), transparent 60%);
+            opacity: 0;
+            transform: translate3d(0,0,0);
+        }
+
+        .team-card.show {
+            animation: cardIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        @keyframes cardIn {
+            0% {
+                opacity: 0;
+                transform: translateY(35px) scale(0.9);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-5px) scale(1.03);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .team-card.show::before {
+            animation: glowSweep 0.9s ease-out forwards;
+        }
+
+        @keyframes glowSweep {
+            0% {
+                opacity: 0;
+                transform: translate(-30%, -30%);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(10%, 10%);
+            }
+        }
+
+        .team-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00d3f3;
+            text-shadow: 
+                0 0 16px rgba(0, 211, 243, 1),
+                0 0 30px rgba(0, 211, 243, 0.7);
+            letter-spacing: 1px;
+        }
+
+        .college-name {
+            font-size: 0.9rem;
+            color: rgba(200, 240, 255, 0.9);
+            margin-top: 6px;
+            letter-spacing: 0.3px;
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        .tag {
+            position: absolute;
+            right: 18px;
+            top: 12px;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 211, 243, 0.7);
+            color: #00d3f3;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: rgba(0, 10, 30, 0.514);
+        }
+
+        .note {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 0.8rem;
+            color: rgba(200, 240, 255, 0.8);
+            font-style: italic;
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes gridMove {
+            from { transform: translate(0, 0); }
+            to { transform: translate(50px, 50px); }
+        }
+
+        @keyframes logoEntry {
+            from {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes mascotFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(4deg);
+            }
+            75% {
+                transform: translateY(-8px) rotate(-4deg);
+            }
+        }
+
+        @keyframes textGlow {
+            0%, 100% {
+                text-shadow: 
+                    0 0 20px rgba(0, 211, 243, 1),
+                    0 0 40px rgba(0, 211, 243, 0.8),
+                    0 0 60px rgba(0, 211, 243, 0.6);
+            }
+            50% {
+                text-shadow: 
+                    0 0 30px rgba(0, 211, 243, 1),
+                    0 0 60px rgba(0, 211, 243, 0.9),
+                    0 0 90px rgba(0, 211, 243, 0.8);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                width: 100px;
+                top: 12px;
+                left: 15px;
+            }
+
+            .mascot-float {
+                width: 80px;
+                height: 80px;
+                top: 12px;
+                right: 15px;
+            }
+
+            .main-title {
+                font-size: 1.4rem;
+                top: 70px;
+                letter-spacing: 2px;
+                padding: 0 10px;
+            }
+
+            .container {
+                padding-top: 120px;
+            }
+
+            .team-name {
+                font-size: 1.3rem;
+            }
+
+            .college-name {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="tech-grid"></div>
+
+    <!-- Replace src with your logo and mascot if needed -->
+    <img src="avishkar-logo.png" alt="Avishkaar Logo" class="logo">
+    <img src="panda_final__bg_-removebg-preview.png" alt="Mascot" class="mascot-float">
+
+    <h1 class="main-title">Top 10 Teams • Avishkaar Season 3</h1>
+
+    <div class="container">
+        <div class="start-screen" id="startScreen">
+            <button class="start-btn" onclick="startReveal()">
+                <span style="position: relative; z-index: 1;">⚡ Reveal Top 10 Teams ⚡</span>
+            </button>
+            <p class="note">Click once.</p>
+        </div>
+
+        <div class="list-wrapper">
+            <div class="team-list" id="teamList">
+                <!-- Cards will be added here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Background particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (Math.random() * 5 + 8) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // 📝 Top 10 teams (EDIT HERE)
+        const teams = [
+            { name: 'Team Satvacoders', college: 'Ramdeobaba University' },
+            { name: 'Team VARDAAN', college: 'Dr Shakuntala Misra National Rehabilitation University (DSMNRU)' },
+            { name: 'Team CtrlAltWin', college: 'Savitribai Phule Pune University (SPPU), Pune' },
+            { name: 'Team T4skForce', college: 'National Forensic Sciences University'},
+            { name: 'Team 404 Founders', college: 'K. J. Somaiya College of Engineering (KJSCE), Vidyavihar' },
+            { name: 'Team Baaghi', college: 'Vardhaman College of Engineering (VCE), Hyderabad' },
+            { name: 'Team Akatsuki', college: 'Dwarkadas J. Sanghvi College of Engineering (DJSCE), Mumbai' },
+            { name: 'Team Airavat', college: 'Sarala Birla University' },
+            { name: 'Team ThinkTank', college: 'Ballari Institute of Technology & Management' },
+            { name: 'Team Dynovista', college: 'Symbiosis Skills and Professional University' }
+        ];
+
+        const teamListEl = document.getElementById('teamList');
+
+        // Create all cards initially (hidden)
+        function buildCards() {
+            teamListEl.innerHTML = '';
+            teams.forEach(team => {
+                const card = document.createElement('div');
+                card.className = 'team-card';
+
+                const tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.textContent = 'Top 10';
+
+                const nameEl = document.createElement('div');
+                nameEl.className = 'team-name';
+                nameEl.textContent = team.name;
+
+                const collegeEl = document.createElement('div');
+                collegeEl.className = 'college-name';
+                collegeEl.innerHTML = team.college;
+
+                card.appendChild(tag);
+                card.appendChild(nameEl);
+                card.appendChild(collegeEl);
+
+                teamListEl.appendChild(card);
+            });
+        }
+
+        buildCards();
+
+        function startReveal() {
+            const startScreen = document.getElementById('startScreen');
+            startScreen.style.display = 'none';
+
+            const cards = Array.from(document.querySelectorAll('.team-card'));
+            let index = 0;
+
+            // Reveal first card immediately, then every 2 seconds
+            const revealInterval = setInterval(() => {
+                if (index >= cards.length) {
+                    clearInterval(revealInterval);
+                    return;
+                }
+                cards[index].classList.add('show');
+                index++;
+            }, 2000);
+
+            // Reveal the first card right away (optional)
+            if (cards.length > 0) {
+                cards[0].classList.add('show');
+                index = 1;
+            }
+        }
+    </script>
+</body>
+</html>
